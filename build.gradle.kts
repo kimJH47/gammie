@@ -36,6 +36,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.springframework.restdocs:spring-restdocs-webtestclient")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation("com.github.f4b6a3:ulid-creator:5.2.3")
 }
 
 kotlin {
