@@ -1,5 +1,9 @@
 package core.gammie.application
 
+import java.io.Serializable
+
 data class Payload(
-    val type: String,
-)
+    val token: String,
+    val body: Any,
+    val commend: Commend
+) : Serializable
