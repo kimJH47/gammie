@@ -1,4 +1,4 @@
-package core.gammie.application
+package core.gammieapi.application
 
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.NotBlank

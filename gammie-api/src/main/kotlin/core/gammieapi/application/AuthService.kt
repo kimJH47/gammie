@@ -1,0 +1,23 @@
+package core.gammieapi.application
+
+import core.gammieapi.repository.User
+import core.gammieapi.repository.UserRepository
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+
+@Service
+class AuthService(
+    private val userRepository: UserRepository
+) {
+    @Transactional
+    fun signUp(nickname: String): String {
+        validateDuplicate(nickname)
+        return userRepository.save(User(nickname)).id.toString()
+    }
+
+    private fun validateDuplicate(nickname: String) {
+        if (userRepository.existsByNickname(nickname)) {
+            throw IllegalArgumentException("User with nickname $nickname already exists.")
+        }
+    }
+}

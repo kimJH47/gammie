@@ -1,4 +1,4 @@
-package core.gammie.repository
+package core.gammieapi.repository
 
 import org.springframework.data.repository.CrudRepository
 

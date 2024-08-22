@@ -1,4 +1,4 @@
-package core.gammie.repository
+package core.gammieapi.repository
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
