@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration
 class ValidatorConfig {
 
     @Bean
-    fun validator(): Validator {
+    fun hibernateValidator(): Validator {
         return Validation.byProvider(HibernateValidator::class.java)
             .configure()
             .buildValidatorFactory().validator
