@@ -7,7 +7,8 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AuthService(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val tokenProvider: TokenProvider
 ) {
     @Transactional
     fun signUp(nickname: String): String {
@@ -19,5 +20,17 @@ class AuthService(
         if (userRepository.existsByNickname(nickname)) {
             throw IllegalArgumentException("User with nickname $nickname already exists.")
         }
+    }
+
+    @Transactional(readOnly = true)
+    fun login(nickname: String): LoginResponse {
+        if (userRepository.existsByNickname(nickname)) {
+            return LoginResponse(tokenProvider.provide(nickname, EXPIRED_TIME))
+        }
+        throw IllegalArgumentException("User with nickname $nickname does not exist.")
+    }
+
+    companion object {
+        private const val EXPIRED_TIME = 1000 * 60 * 30
     }
 }

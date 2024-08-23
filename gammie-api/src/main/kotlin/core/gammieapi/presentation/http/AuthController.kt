@@ -1,6 +1,8 @@
 package core.gammieapi.presentation.http
 
 import core.gammieapi.application.AuthService
+import core.gammieapi.application.LoginRequest
+import core.gammieapi.application.LoginResponse
 import core.gammieapi.application.SignupRequest
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
@@ -16,5 +18,10 @@ class AuthController(
     @PostMapping("/api/signup")
     fun signup(@RequestBody @Valid request: SignupRequest): ResponseEntity<String> {
         return ResponseEntity.ok(authService.signUp(request.nickname))
+    }
+
+    @PostMapping("/api/login")
+    fun login(@RequestBody @Valid request: LoginRequest): ResponseEntity<LoginResponse> {
+        return ResponseEntity.ok(authService.login(request.nickname))
     }
 }
