@@ -2,7 +2,7 @@ package core.gammie.handler
 
 import core.gammie.logger
 import io.netty.channel.ChannelDuplexHandler
-import io.netty.channel.ChannelHandler
+import io.netty.channel.ChannelHandler.Sharable
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.http.websocketx.PingWebSocketFrame
 import io.netty.handler.timeout.IdleState
@@ -10,7 +10,7 @@ import io.netty.handler.timeout.IdleStateEvent
 import org.springframework.stereotype.Component
 
 @Component
-@ChannelHandler.Sharable
+@Sharable
 class IdleHandler : ChannelDuplexHandler() {
     val log = logger()
     override fun userEventTriggered(ctx: ChannelHandlerContext, evt: Any) {
