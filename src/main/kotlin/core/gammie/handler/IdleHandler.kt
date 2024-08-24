@@ -17,7 +17,7 @@ class IdleHandler : ChannelDuplexHandler() {
         if (evt is IdleStateEvent &&
             evt.state() == IdleState.ALL_IDLE
         ) {
-            log.info("wake up ide channel:{}", ctx.channel().remoteAddress())
+            log.info("wake up ide channel ip:{} id:{}", ctx.channel().remoteAddress(), ctx.channel().id())
             ctx.writeAndFlush(PingWebSocketFrame())
             return
         }
