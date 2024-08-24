@@ -14,7 +14,7 @@ class Validator(
     private val log = logger()
 
     fun <T : Any> validateAndGet(body: Any, classType: KClass<T>): T {
-        val value = MapperUtils.readValueOrThrow(body, classType.java)
+        val value = MapperUtils.readValueOrThrow(body, classType)
         validate(value)
         return value
     }
