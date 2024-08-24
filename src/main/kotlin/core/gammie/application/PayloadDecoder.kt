@@ -1,19 +1,21 @@
 package core.gammie.application
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import io.netty.channel.ChannelHandler
+import core.gammie.logger
+import core.gammie.util.MapperUtils
+import io.netty.channel.ChannelHandler.Sharable
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.MessageToMessageDecoder
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame
 import org.springframework.stereotype.Component
 
 @Component
-@ChannelHandler.Sharable
-class PayloadDecoder : MessageToMessageDecoder<String>() {
+@Sharable
+class PayloadDecoder : MessageToMessageDecoder<TextWebSocketFrame>() {
 
-    private val objectMapper = ObjectMapper()
+    private val log = logger()
 
-    override fun decode(p0: ChannelHandlerContext, message: String, out: MutableList<Any>) {
-        objectMapper.readValue(message, Payload::class.java)?.let {
+    override fun decode(ctx: ChannelHandlerContext, message: TextWebSocketFrame, out: MutableList<Any>) {
+        MapperUtils.jsonToPayloadOrThrow(message.text()).let {
             out.add(it)
         }
     }
