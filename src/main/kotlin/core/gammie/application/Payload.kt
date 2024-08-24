@@ -1,9 +1,10 @@
 package core.gammie.application
 
+import com.fasterxml.jackson.annotation.JsonCreator
 import java.io.Serializable
 
-data class Payload(
+data class Payload @JsonCreator constructor(
     val token: String,
-    val body: Any,
-    val commend: Commend
-) : Serializable
+    val body: Any = "",
+    val command: Command
+): Serializable
