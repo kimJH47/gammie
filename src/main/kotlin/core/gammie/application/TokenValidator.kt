@@ -13,9 +13,9 @@ class TokenValidator(
     private val secretKey: String,
 ) {
     private val jwtParser: JwtParser = Jwts.parser()
-        .setSigningKey(secretKey)
 
     fun validate(token: String) {
+        jwtParser.setSigningKey(secretKey)
         kotlin.runCatching {
             jwtParser.parseClaimsJws(token)
         }.getOrElse { throw CustomSocketException(ErrorCode.INVALID_TOKEN) }
