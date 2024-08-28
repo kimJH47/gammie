@@ -2,13 +2,17 @@ package core.gammieapi.application
 
 import core.gammieapi.repository.ChatRoomRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 @Service
 class ChatRoomService(
     private val chatRoomRepository: ChatRoomRepository,
 ) {
-    fun findOne(chatRoomId: Long): ChatRoomResponse {
-        val chatRoom = chatRoomRepository.findById(chatRoomId)
+
+    @Transactional(readOnly = true)
+    fun findOne(chatRoomId: String): ChatRoomResponse {
+        val chatRoom = chatRoomRepository.findById(UUID.fromString(chatRoomId))
             .orElseThrow { CustomException(ErrorCode.CHAT_ROOM_NOT_FOUND) }
 
         return ChatRoomResponse(

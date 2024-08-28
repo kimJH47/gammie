@@ -12,8 +12,8 @@ class ChatRoomController(
     private val chatRoomService: ChatRoomService
 ) {
 
-    @GetMapping("/api/{id}")
-    fun getChatRoom(@PathVariable("id") chatRoomId: Long): ResponseEntity<ChatRoomResponse> {
+    @GetMapping("/api/chat-room/{id}")
+    fun getChatRoom(@PathVariable("id") chatRoomId: String): ResponseEntity<ChatRoomResponse> {
         return ResponseEntity.ok(chatRoomService.findOne(chatRoomId))
     }
 }
