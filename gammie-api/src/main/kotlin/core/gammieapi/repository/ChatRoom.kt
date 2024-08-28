@@ -1,6 +1,7 @@
 package core.gammieapi.repository
 
 import com.github.f4b6a3.ulid.UlidCreator
+import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.*
 
@@ -12,6 +13,7 @@ open class ChatRoom(
     joinCount: Int,
     imageUrl: String
 ) {
+    @Id
     var id: UUID = id
         protected set
     var name: String = name
