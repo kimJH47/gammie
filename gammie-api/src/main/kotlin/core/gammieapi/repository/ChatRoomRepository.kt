@@ -1,5 +1,8 @@
 package core.gammieapi.repository
 
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.mongodb.repository.MongoRepository
+import org.springframework.stereotype.Repository
+import java.util.*
 
-interface ChatRoomRepository : CrudRepository<ChatRoom, Long>
+@Repository
+interface ChatRoomRepository : MongoRepository<ChatRoom, UUID>
