@@ -5,11 +5,21 @@ import org.springframework.data.mongodb.core.mapping.Document
 import java.util.*
 
 @Document(collection = "chatrooms")
-class ChatRoom(
-    private val id: UUID = UlidCreator.getMonotonicUlid().toUuid(),
-    private val name: String,
-    private val description: String,
-    private val joinCount: Int
+open class ChatRoom(
+    id: UUID = UlidCreator.getMonotonicUlid().toUuid(),
+    name: String,
+    description: String,
+    joinCount: Int,
+    imageUrl: String
 ) {
-
+    var id: UUID = id
+        protected set
+    var name: String = name
+        protected set
+    var description: String = description
+        protected set
+    var joinCount: Int = joinCount
+        protected set
+    var imageUrl: String = imageUrl
+        protected set
 }
