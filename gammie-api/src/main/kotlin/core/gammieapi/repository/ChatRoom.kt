@@ -11,7 +11,8 @@ open class ChatRoom(
     name: String,
     description: String,
     joinCount: Int,
-    imageUrl: String
+    imageUrl: String,
+    category: String,
 ) {
     @Id
     var id: UUID = id
@@ -23,5 +24,7 @@ open class ChatRoom(
     var joinCount: Int = joinCount
         protected set
     var imageUrl: String = imageUrl
+        protected set
+    var category: String = category
         protected set
 }
