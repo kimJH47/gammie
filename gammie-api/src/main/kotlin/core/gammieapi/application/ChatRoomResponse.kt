@@ -5,5 +5,6 @@ data class ChatRoomResponse(
     val name: String,
     val description: String,
     val joinCount: Int,
-    val imageUrl : String
+    val imageUrl : String,
+    val category : String
 )

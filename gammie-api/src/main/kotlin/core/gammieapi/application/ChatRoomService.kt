@@ -20,7 +20,8 @@ class ChatRoomService(
             chatRoom.name,
             chatRoom.description,
             chatRoom.joinCount,
-            chatRoom.imageUrl
+            chatRoom.imageUrl,
+            chatRoom.category
         )
     }
 }
