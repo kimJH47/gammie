@@ -23,7 +23,7 @@ class IGDBClient(
                 it.add("Client-ID", clientId)
             }
             .contentType(MediaType.TEXT_PLAIN)
-            .bodyValue("fields name, cover.image_id, rating, rating_count; where multiplayer_modes.onlinemax > 1 &rating_count > 10;limit 10;")
+            .bodyValue("fields name, cover.image_id, rating, rating_count, genres; where multiplayer_modes.onlinemax > 1 & rating_count > 10; limit 10;")
             .retrieve()
             .bodyToFlux(IgdbGameResponse::class.java)
     }
