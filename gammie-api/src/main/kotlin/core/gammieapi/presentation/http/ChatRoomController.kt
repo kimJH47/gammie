@@ -13,7 +13,7 @@ class ChatRoomController(
 ) {
 
     @GetMapping("/api/chat-room/{id}")
-    fun getChatRoom(@PathVariable("id") chatRoomId: String): ResponseEntity<ChatRoomResponse> {
+    fun findChatRoom(@PathVariable("id") chatRoomId: String): ResponseEntity<ChatRoomResponse> {
         return ResponseEntity.ok(chatRoomService.findOne(chatRoomId))
     }
 }
