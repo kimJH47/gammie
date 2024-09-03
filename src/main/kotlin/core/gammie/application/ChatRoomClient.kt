@@ -11,7 +11,7 @@ class ChatRoomClient(
 
     fun asyncFindChatRoomById(id: String): Mono<ChatRoomResponse> {
         return webClient.get()
-            .uri("api/chat-room/{id}", id)
+            .uri("api/chat-rooms/{id}", id)
             .retrieve()
             .bodyToMono(ChatRoomResponse::class.java)
     }
