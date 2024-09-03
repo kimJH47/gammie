@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component
 class ConnectionRedisRepository(
     private val redisTemplate: RedisTemplate<String, Any>
 ) {
-    fun createConnection(roomId: String, channelId: String) {
-        val opsForSet = redisTemplate.opsForSet()
-        opsForSet.add(roomId, channelId)
+    fun createConnection(roomId: String, channelId: String, userId: String) {
+        redisTemplate.opsForHash<String, String>()
+            .put(roomId, userId, channelId)
     }
 }

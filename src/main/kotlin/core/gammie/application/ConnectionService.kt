@@ -19,7 +19,11 @@ class ConnectionService(
         getChatRoomById(request.roomId)
             .subscribe(
                 {
-                    connectionRedisRepository.createConnection(request.roomId, channel.id().asLongText())
+                    connectionRedisRepository.createConnection(
+                        request.roomId,
+                        channel.id().asLongText(),
+                        request.userId
+                    )
                     channel.writeAndFlush(CustomResponse(ResponseType.CONNECTED))
                         .addListener {
                             if (it.isSuccess) {
