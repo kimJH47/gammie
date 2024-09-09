@@ -6,10 +6,13 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 @Service
 class ChatRoomService(
     private val chatRoomRepository: ChatRoomRepository,
+    private val chatTokenProvider: ChatTokenProvider
 ) {
 
     @Transactional(readOnly = true)
@@ -53,5 +56,15 @@ class ChatRoomService(
 
     private fun getMaxSizePageable(): Pageable {
         return PageRequest.of(0, 10)
+    }
+
+    fun join(roomId: String, userId: String): JoinResponse {
+        if (!chatRoomRepository.existsById(UUID.fromString(roomId))) {
+            throw CustomException(ErrorCode.CHAT_ROOM_NOT_FOUND)
+        }
+        val chatToken = chatTokenProvider.provide(
+            roomId, userId, 30.toDuration(DurationUnit.SECONDS).toInt(DurationUnit.MILLISECONDS)
+        )
+        return JoinResponse(chatToken, roomId, userId)
     }
 }

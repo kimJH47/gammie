@@ -3,6 +3,7 @@ package core.gammieapi.presentation.http
 import core.gammieapi.application.ChatRoomPageResponse
 import core.gammieapi.application.ChatRoomResponse
 import core.gammieapi.application.ChatRoomService
+import core.gammieapi.application.JoinResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -25,7 +26,15 @@ class ChatRoomController(
     }
 
     @GetMapping("/api/chat-rooms/recent")
-    fun findRecent() : ResponseEntity<ChatRoomPageResponse> {
+    fun findRecent(): ResponseEntity<ChatRoomPageResponse> {
         return ResponseEntity.ok(chatRoomService.findRecent())
+    }
+
+    @GetMapping("/api/chat-rooms/join/{chatRoomId}")
+    fun find(
+        @PathVariable("chatRoomId") chatRoomId: String,
+        @LoginId userId: String
+    ): ResponseEntity<JoinResponse> {
+        return ResponseEntity.ok(chatRoomService.join(chatRoomId, userId))
     }
 }
