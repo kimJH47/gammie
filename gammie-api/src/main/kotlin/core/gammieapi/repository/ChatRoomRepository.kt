@@ -13,4 +13,6 @@ interface ChatRoomRepository : MongoRepository<ChatRoom, UUID> {
     fun findByIdGreaterThan(lastId: UUID, pageable: Pageable): List<ChatRoom>
 
     fun findAllBy(pageable: Pageable): List<ChatRoom>
+
+    override fun existsById(id : UUID) : Boolean
 }
