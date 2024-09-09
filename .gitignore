@@ -42,3 +42,8 @@ out/
 
 src/main/resources/application.yml
 gammie-api/src/main/resources/application.yml
+
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
