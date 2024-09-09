@@ -1,6 +1,8 @@
 package core.gammie.handler
 
 import core.gammie.application.*
+import core.gammie.application.Command.CHAT_REQUEST
+import core.gammie.application.Command.CONNECT
 import core.gammie.logger
 import io.netty.channel.ChannelHandler.Sharable
 import io.netty.channel.ChannelHandlerContext
@@ -11,16 +13,25 @@ import org.springframework.stereotype.Component
 @Sharable
 class CommendHandler(
     private val connectionService: ConnectionService,
+    private val chattingService: ChattingService,
+    private val pubsubService: PubSubService,
     private val validator: Validator,
 ) : SimpleChannelInboundHandler<Payload>() {
     private val log = logger()
 
     override fun channelRead0(ctx: ChannelHandlerContext, payload: Payload) {
         when (payload.command) {
-            Command.CONNECT -> {
-                connectionService.connect(
-                    ctx.channel(), validator.validateAndGet(payload.body, ConnectRequest::class)
-                )
+            CONNECT -> {
+                val request = validator.validateAndGet(payload.body, ConnectRequest::class)
+                connectionService.connect(ctx.channel(), request)
+                pubsubService.receiveMessage(request, ctx)
+            }
+
+            CHAT_REQUEST -> {
+                chattingService.processMessage(validator.validateAndGet(payload.body, MessageRequest::class))
+                    .subscribe({
+                        pubsubService.sendMessage(validator.validateAndGet(payload.body, MessageRequest::class))
+                    })
             }
 
             else -> {
