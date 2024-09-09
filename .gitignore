@@ -40,7 +40,7 @@ out/
 .kotlin
 
 
-src/main/resources/application.yml
+gammie-chat/src/main/resources/application.yml
 gammie-api/src/main/resources/application.yml
 
 .DS_Store
