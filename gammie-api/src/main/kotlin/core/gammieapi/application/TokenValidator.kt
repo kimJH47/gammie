@@ -11,12 +11,16 @@ class TokenValidator(
     @Value("\${jwt.secret-key}")
     private val secretKey: String
 ) {
-    private val jwtParser: JwtParser = Jwts.parser()
 
-    fun validate(token: String) {
-        jwtParser.setSigningKey(secretKey)
+    private val jwtParser: JwtParser by lazy {
+        Jwts.parser().setSigningKey(secretKey)
+    }
+
+    fun validateAndGetPayload(token: String): Map<String, Any> {
         kotlin.runCatching {
-            jwtParser.parseClaimsJws(token)
+            return jwtParser.parseClaimsJws(token)
+                .body
+                .toMap()
         }.getOrElse { throw AuthException() }
     }
 }
