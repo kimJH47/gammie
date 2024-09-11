@@ -4,7 +4,9 @@ import core.gammieapi.application.ChatRoomPageResponse
 import core.gammieapi.application.ChatRoomResponse
 import core.gammieapi.application.ChatRoomService
 import core.gammieapi.application.JoinResponse
+import core.gammieapi.auth.domain.AuthUser
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
@@ -33,8 +35,8 @@ class ChatRoomController(
     @GetMapping("/api/chat-rooms/join/{chatRoomId}")
     fun find(
         @PathVariable("chatRoomId") chatRoomId: String,
-        @LoginId userId: String
+        @AuthenticationPrincipal authUser: AuthUser
     ): ResponseEntity<JoinResponse> {
-        return ResponseEntity.ok(chatRoomService.join(chatRoomId, userId))
+        return ResponseEntity.ok(chatRoomService.join(chatRoomId, authUser.username))
     }
 }
