@@ -16,8 +16,8 @@ class AuthController(
 ) {
 
     @PostMapping("/api/signup")
-    fun signup(@RequestBody @Valid request: SignupRequest): ResponseEntity<String> {
-        return ResponseEntity.ok(authService.signUp(request.nickname))
+    fun signup(@RequestBody @Valid request: SignupRequest): ResponseEntity<Any> {
+        return ResponseEntity.ok(mapOf("id" to authService.signUp(request.nickname)))
     }
 
     @PostMapping("/api/login")
