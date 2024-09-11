@@ -20,7 +20,7 @@ class TokenProvider(
             .setHeaderParam("alg", SIGNATURE_ALGORITHM)
             .setClaims(payload)
             .setExpiration(createExpireTime(expiredTime))
-            .signWith(SignatureAlgorithm.HS256, secretKey)
+            .signWith(SIGNATURE_ALGORITHM, secretKey)
             .compact()
     }
 
