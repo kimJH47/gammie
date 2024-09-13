@@ -2,7 +2,6 @@ package core.gammiechat.handler
 
 import core.gammiechat.application.*
 import core.gammiechat.application.Command.CHAT_REQUEST
-import core.gammiechat.application.Command.CONNECT
 import core.gammiechat.logger
 import io.netty.channel.ChannelHandler.Sharable
 import io.netty.channel.ChannelHandlerContext
@@ -21,12 +20,6 @@ class CommendHandler(
 
     override fun channelRead0(ctx: ChannelHandlerContext, payload: Payload) {
         when (payload.command) {
-            CONNECT -> {
-                val request = validator.validateAndGet(payload.body, ConnectRequest::class)
-                connectionService.connect(ctx.channel(), request)
-                pubsubService.receiveMessage(request, ctx)
-            }
-
             CHAT_REQUEST -> {
                 chattingService.processMessage(validator.validateAndGet(payload.body, MessageRequest::class))
                     .subscribe({
