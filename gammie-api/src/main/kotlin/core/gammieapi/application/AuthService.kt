@@ -30,6 +30,11 @@ class AuthService(
         throw IllegalArgumentException("User with nickname $nickname does not exist.")
     }
 
+    @Transactional(readOnly = true)
+    fun checkExistNickname(nickname: String): Boolean {
+        return userRepository.existsByNickname(nickname)
+    }
+
     companion object {
         private const val EXPIRED_TIME = 1000 * 60 * 30
     }
