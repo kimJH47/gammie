@@ -29,6 +29,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
+    implementation("com.sun.xml.bind:jaxb-impl:4.0.1")
+    implementation("com.sun.xml.bind:jaxb-core:4.0.1")
+    implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
