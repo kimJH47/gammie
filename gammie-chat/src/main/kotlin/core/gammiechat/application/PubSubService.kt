@@ -2,6 +2,7 @@ package core.gammiechat.application
 
 import io.netty.channel.ChannelHandlerContext
 import org.springframework.stereotype.Service
+import reactor.core.publisher.Mono
 
 @Service
 class PubSubService(
@@ -13,7 +14,8 @@ class PubSubService(
         redisMessagePublisher.publish("chatroom:${request.roomId}", request.content)
     }
 
-    fun receiveMessage(request: ConnectRequest, ctx: ChannelHandlerContext) {
+    fun sub(request: ConnectRequest, ctx: ChannelHandlerContext) : Mono<Unit> {
         redisMessageSubscriber.subscribe("chatroom:${request.roomId}", ctx)
+        return Mono.empty()
     }
 }
