@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono
 @Service
 class ChattingService {
 
-    fun processMessage(request: MessageRequest): Mono<String> {
-        return Mono.just(request.content)
+    fun processChatDto(request: MessageRequest): Mono<ChatDto> {
+        return Mono.just(ChatDto(request.roomId, request.userId, request.userId, request.content))
     }
 }
