@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component
 class WebCustomResponseEncoder : MessageToMessageEncoder<CustomResponse>() {
 
     override fun encode(ctx: ChannelHandlerContext, response: CustomResponse, out: MutableList<Any>) {
-        MapperUtils.toJson(response).let {
-            out.add(TextWebSocketFrame(it))
+        MapperUtils.toJson(response).run {
+            out.add(TextWebSocketFrame(this))
         }
     }
 }
