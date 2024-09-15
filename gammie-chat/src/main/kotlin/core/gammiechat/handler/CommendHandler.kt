@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component
 @Component
 @Sharable
 class CommendHandler(
-    private val connectionService: ConnectionService,
     private val chattingService: ChattingService,
     private val pubsubService: PubSubService,
     private val validator: Validator,
@@ -21,10 +20,8 @@ class CommendHandler(
     override fun channelRead0(ctx: ChannelHandlerContext, payload: Payload) {
         when (payload.command) {
             CHAT_REQUEST -> {
-                chattingService.processMessage(validator.validateAndGet(payload.body, MessageRequest::class))
-                    .subscribe({
-                        pubsubService.sendMessage(validator.validateAndGet(payload.body, MessageRequest::class))
-                    })
+                chattingService.processChatDto(validator.validateAndGet(payload.body, MessageRequest::class))
+                    .subscribe { pubsubService.sendMessage(it) }
             }
 
             else -> {
