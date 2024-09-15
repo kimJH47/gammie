@@ -4,6 +4,7 @@ import core.gammiechat.application.PayloadDecoder
 import core.gammiechat.application.WebCustomResponseEncoder
 import core.gammiechat.handler.AuthHandler
 import core.gammiechat.handler.CommendHandler
+import core.gammiechat.handler.ConnectionHandler
 import core.gammiechat.handler.IdleHandler
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.ChannelPipeline
@@ -21,7 +22,8 @@ class NettyChannelInitializer(
     private val payloadDecoder: PayloadDecoder,
     private val commendHandler: CommendHandler,
     private val authHandler: AuthHandler,
-    private val webCustomResponseEncoder : WebCustomResponseEncoder
+    private val webCustomResponseEncoder: WebCustomResponseEncoder,
+    private val connectionHandler: ConnectionHandler
 
 ) : ChannelInitializer<SocketChannel>() {
 
@@ -29,14 +31,14 @@ class NettyChannelInitializer(
         val pipeline: ChannelPipeline = socketChannel.pipeline()
         pipeline.addLast(HttpServerCodec())
             .addLast(HttpObjectAggregator(65536))
+            .addLast(authHandler)
             .addLast(WebSocketServerCompressionHandler())
-            .addLast(WebSocketServerProtocolHandler("/ws", null, true))
+            .addLast(WebSocketServerProtocolHandler("/ws", null, true, 65536, false, true))
             .addLast(IdleStateHandler(0, 0, 180))
+            .addLast(connectionHandler)
             .addLast(idleHandler)
             .addLast(payloadDecoder)
-            .addLast(webCustomResponseEncoder)
-            .addLast(authHandler)
             .addLast(commendHandler)
-        //        .addLast(HealthCheckHandler())
+            .addLast(webCustomResponseEncoder)
     }
 }
