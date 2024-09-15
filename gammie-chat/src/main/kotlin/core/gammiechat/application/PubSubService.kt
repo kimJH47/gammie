@@ -1,5 +1,6 @@
 package core.gammiechat.application
 
+import core.gammiechat.util.MapperUtils
 import io.netty.channel.ChannelHandlerContext
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
@@ -10,12 +11,16 @@ class PubSubService(
     private val redisMessageSubscriber: RedisMessageSubscriber
 ) {
 
-    fun sendMessage(request: MessageRequest) {
-        redisMessagePublisher.publish("chatroom:${request.roomId}", request.content)
+    fun sendMessage(chatDto: ChatDto) {
+        redisMessagePublisher.publish("$TOPIC_PREFIX:${chatDto.roomId}", MapperUtils.toJson(chatDto))
     }
 
-    fun sub(request: ConnectRequest, ctx: ChannelHandlerContext) : Mono<Unit> {
-        redisMessageSubscriber.subscribe("chatroom:${request.roomId}", ctx)
+    fun sub(request: ConnectRequest, ctx: ChannelHandlerContext): Mono<Unit> {
+        redisMessageSubscriber.subscribe("$TOPIC_PREFIX:${request.roomId}", ctx)
         return Mono.empty()
+    }
+
+    companion object {
+        const val TOPIC_PREFIX = "chatroom"
     }
 }
