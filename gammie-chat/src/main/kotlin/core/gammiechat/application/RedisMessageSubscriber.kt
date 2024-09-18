@@ -14,10 +14,19 @@ class RedisMessageSubscriber(
 
     fun subscribe(channel: String, ctx: ChannelHandlerContext) {
         redisTemplate.listenToChannel(channel)
-            .map { MapperUtils.readValueOrThrow(it.message, ChatDto::class) }
-            .subscribe {
-                ctx.writeAndFlush(CustomResponse(ResponseType.RECEIVE_CHAT, it))
-                log.info("Subscribed to channel {}", channel)
+            .map {
+                log.info("message : ${it.message}")
+                MapperUtils.readJsonValueOrThrow(it.message.toString(), ChatDto::class)
+            }
+            .subscribe { it ->
+                ctx.channel().writeAndFlush(CustomResponse(ResponseType.RECEIVE_CHAT, it))
+                    .addListener {
+                        if (it.isSuccess) {
+                            log.info("write channel {}", ctx.channel().id())
+                        } else {
+                            log.warn("Failed to send the message to the client. roomId:${channel}, message:${it.cause().message}")
+                        }
+                    }
             }
     }
 }
