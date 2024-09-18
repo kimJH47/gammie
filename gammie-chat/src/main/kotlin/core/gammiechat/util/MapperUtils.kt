@@ -1,13 +1,13 @@
 package core.gammiechat.util
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
-import core.gammiechat.application.Payload
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import kotlin.reflect.KClass
 
 class MapperUtils private constructor() {
     companion object {
-        private val objectMapper = jacksonObjectMapper()
+        private val objectMapper = ObjectMapper().registerKotlinModule()
+
 
         fun <T : Any> readValueOrThrow(value: Any, type: KClass<T>): T {
             try {
@@ -17,9 +17,9 @@ class MapperUtils private constructor() {
             }
         }
 
-        fun jsonToPayloadOrThrow(json: String): Payload {
+        fun <T : Any> readJsonValueOrThrow(json: String, type: KClass<T>): T {
             try {
-                return objectMapper.readValue<Payload>(json)
+                return objectMapper.readValue(json, type.java)
             } catch (e: IllegalArgumentException) {
                 throw e
             }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 class PayloadDecoder : MessageToMessageDecoder<TextWebSocketFrame>() {
 
     override fun decode(ctx: ChannelHandlerContext, message: TextWebSocketFrame, out: MutableList<Any>) {
-        MapperUtils.jsonToPayloadOrThrow(message.text()).let {
+        MapperUtils.readJsonValueOrThrow(message.text(), Payload::class).let {
             out.add(it)
         }
     }
