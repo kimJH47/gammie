@@ -32,4 +32,13 @@ class ConnectionHandler(
                 }
         }
     }
+
+    override fun channelInactive(ctx: ChannelHandlerContext) {
+        val disposable = ctx.channel().attr(ConnectionAttributes.SUBSCRIPTION_KEY).get()
+        if (!disposable.isDisposed) {
+            disposable.dispose()
+        }
+        logger.info("connection channel unsubscribe.")
+        ctx.fireChannelInactive()
+    }
 }
