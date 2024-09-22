@@ -24,7 +24,6 @@ val kotestVersion = "5.7.2"
 val kotestExtensionSpringVersion = "1.1.3"
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
