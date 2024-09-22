@@ -1,7 +1,5 @@
 package core.gammiechat.config
 
-import io.lettuce.core.RedisClient
-import io.lettuce.core.RedisURI
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -43,30 +41,25 @@ class RedisConfig {
     }
 
     @Bean
-    fun reactiveRedisTemplate(factory: ReactiveRedisConnectionFactory): ReactiveRedisTemplate<String, Any> {
+    fun redisSerializationContext(): RedisSerializationContext<String, Any> {
         val keySerializer = StringRedisSerializer()
         val valueSerializer = GenericJackson2JsonRedisSerializer()
 
-        val serializationContext = RedisSerializationContext
+        return RedisSerializationContext
             .newSerializationContext<String, Any>(keySerializer)
             .key(keySerializer)
             .value(valueSerializer)
             .hashKey(keySerializer)
             .hashValue(valueSerializer)
             .build()
-
-        return ReactiveRedisTemplate(factory, serializationContext)
     }
 
     @Bean
-    fun redisClient(): RedisClient {
-        val redisProperties = RedisProperties()
-        return RedisClient.create(
-            RedisURI.builder()
-                .withHost(redisProperties.host)
-                .withPort(redisProperties.port)
-                .build()
-        )
+    fun reactiveRedisTemplate(
+        factory: ReactiveRedisConnectionFactory,
+        redisSerializationContext: RedisSerializationContext<String, Any>
+    ): ReactiveRedisTemplate<String, Any> {
+        return ReactiveRedisTemplate(factory, redisSerializationContext)
     }
 
     @Bean

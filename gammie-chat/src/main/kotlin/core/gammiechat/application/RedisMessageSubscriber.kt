@@ -6,16 +6,22 @@ import core.gammiechat.util.MapperUtils
 import io.netty.channel.ChannelHandlerContext
 import org.springframework.data.redis.listener.ChannelTopic
 import org.springframework.data.redis.listener.ReactiveRedisMessageListenerContainer
+import org.springframework.data.redis.serializer.RedisSerializationContext
 import org.springframework.stereotype.Service
 
 @Service
 class RedisMessageSubscriber(
-    private val reactiveRedisMessageListenerContainer: ReactiveRedisMessageListenerContainer
-) {
+    private val reactiveRedisMessageListenerContainer: ReactiveRedisMessageListenerContainer,
+    private val serializationContext: RedisSerializationContext<String, Any>,
+
+    ) {
     private val log = logger()
 
     fun subscribe(channel: String, ctx: ChannelHandlerContext) {
-        val disposable = reactiveRedisMessageListenerContainer.receive(ChannelTopic.of(channel))
+        val disposable = reactiveRedisMessageListenerContainer.receive(
+            arrayListOf(ChannelTopic.of(channel)),
+            serializationContext.keySerializationPair, serializationContext.valueSerializationPair
+        )
             .map { MapperUtils.readJsonValueOrThrow(it.message.toString(), ChatDto::class) }
             .doOnNext { it ->
                 ctx.channel().writeAndFlush(CustomResponse(ResponseType.RECEIVE_CHAT, it))
