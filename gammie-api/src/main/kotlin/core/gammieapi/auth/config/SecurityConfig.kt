@@ -23,7 +23,7 @@ class SecurityConfig(
             it.disable()
         }.csrf {
             it.disable()
-        }.logout{
+        }.logout {
             it.disable()
         }.authorizeHttpRequests {
             it.requestMatchers("/api/login", "/api/signup", "/api/auth/exist-nickname").permitAll()
