@@ -2,6 +2,7 @@ package core.gammieapi.presentation.http
 
 import core.gammieapi.application.*
 import core.gammieapi.auth.domain.AuthUser
+import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
@@ -35,7 +36,7 @@ class ChatRoomController(
     }
 
     @PostMapping("/api/chat-rooms/exit")
-    fun exitChatRoom(@RequestBody request: ExitChatRoomRequest) {
+    fun exitChatRoom(@Valid @RequestBody request: ExitChatRoomRequest) {
         chatRoomService.exit(request.roomId, request.userId)
     }
 }
