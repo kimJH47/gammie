@@ -1,6 +1,7 @@
 package core.gammieapi.application
 
 import core.gammieapi.repository.ChatRoomRepository
+import core.gammieapi.repository.UserParticipantRepository
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -12,7 +13,8 @@ import kotlin.time.toDuration
 @Service
 class ChatRoomService(
     private val chatRoomRepository: ChatRoomRepository,
-    private val chatTokenProvider: ChatTokenProvider
+    private val chatTokenProvider: ChatTokenProvider,
+    private val userParticipantRepository: UserParticipantRepository
 ) {
 
     @Transactional(readOnly = true)
@@ -66,5 +68,11 @@ class ChatRoomService(
             roomId, userId, 30.toDuration(DurationUnit.SECONDS).toInt(DurationUnit.MILLISECONDS)
         )
         return JoinResponse(chatToken, roomId, userId)
+    }
+
+    @Transactional
+    fun exit(roomId: String, userId: String) {
+        chatRoomRepository.decreaseJoinCount(roomId)
+        userParticipantRepository.deleteByUserIdAndRoomId(roomId, UUID.fromString(userId))
     }
 }

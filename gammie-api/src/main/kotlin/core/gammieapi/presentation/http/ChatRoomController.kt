@@ -1,16 +1,10 @@
 package core.gammieapi.presentation.http
 
-import core.gammieapi.application.ChatRoomPageResponse
-import core.gammieapi.application.ChatRoomResponse
-import core.gammieapi.application.ChatRoomService
-import core.gammieapi.application.JoinResponse
+import core.gammieapi.application.*
 import core.gammieapi.auth.domain.AuthUser
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class ChatRoomController(
@@ -38,5 +32,10 @@ class ChatRoomController(
         @AuthenticationPrincipal authUser: AuthUser
     ): ResponseEntity<JoinResponse> {
         return ResponseEntity.ok(chatRoomService.join(chatRoomId, authUser.username))
+    }
+
+    @PostMapping("/api/chat-rooms/exit")
+    fun exitChatRoom(@RequestBody request: ExitChatRoomRequest) {
+        chatRoomService.exit(request.roomId, request.userId)
     }
 }
