@@ -3,6 +3,7 @@ package core.gammieapi.repository
 import org.springframework.data.domain.Pageable
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.mongodb.repository.Query
+import org.springframework.data.mongodb.repository.Update
 import org.springframework.stereotype.Repository
 import java.util.*
 
@@ -14,5 +15,9 @@ interface ChatRoomRepository : MongoRepository<ChatRoom, UUID> {
 
     fun findAllBy(pageable: Pageable): List<ChatRoom>
 
-    override fun existsById(id : UUID) : Boolean
+    override fun existsById(id: UUID): Boolean
+
+    @Query("{ 'id' : _0}")
+    @Update("{ '\$inc': { 'joinCount': -1 } }")
+    fun decreaseJoinCount(roomId: String)
 }
