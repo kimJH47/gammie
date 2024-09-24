@@ -13,12 +13,12 @@ class ChatRoomController(
 ) {
 
     @GetMapping("/api/chat-rooms/{id}")
-    fun findChatRoom(@PathVariable("id") chatRoomId: String): ResponseEntity<ChatRoomResponse> {
+    fun findOne(@PathVariable("id") chatRoomId: String): ResponseEntity<ChatRoomResponse> {
         return ResponseEntity.ok(chatRoomService.findOne(chatRoomId))
     }
 
     @GetMapping("/api/chat-rooms")
-    fun findAllChatRooms(@RequestParam("lastId") lastId: String): ResponseEntity<ChatRoomPageResponse> {
+    fun findPagination(@RequestParam("lastId") lastId: String): ResponseEntity<ChatRoomPageResponse> {
         return ResponseEntity.ok(chatRoomService.findWithLastId(lastId))
     }
 
