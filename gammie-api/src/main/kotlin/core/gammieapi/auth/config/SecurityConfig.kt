@@ -26,7 +26,13 @@ class SecurityConfig(
         }.logout {
             it.disable()
         }.authorizeHttpRequests {
-            it.requestMatchers("/api/login", "/api/signup", "/api/auth/exist-nickname").permitAll()
+            it.requestMatchers(
+                "/api/login",
+                "/api/signup",
+                "/api/auth/exist-nickname",
+                "/api/chat-rooms/exit",
+                "/api/chat-rooms/participant"
+            ).permitAll()
             it.requestMatchers("/api/**").authenticated()
         }.sessionManagement {
             it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
