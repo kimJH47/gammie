@@ -32,4 +32,17 @@ class ChatRoomClient(
             }
             .bodyToMono<Unit>()
     }
+
+    fun addParticipant(roomId: String, userId: String): Mono<Unit> {
+        return webClient.post()
+            .uri("api/chat-rooms/participant")
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(ParticipantRequest(roomId, userId))
+            .retrieve()
+            .onStatus(HttpStatusCode::is4xxClientError) {
+                Mono.error(ChatException(ErrorCode.BAD_REQEUST_CHAT_API))
+            }
+            .bodyToMono<Unit>()
+
+    }
 }
