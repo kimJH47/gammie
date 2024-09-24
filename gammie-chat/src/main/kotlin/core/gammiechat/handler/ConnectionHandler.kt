@@ -1,6 +1,7 @@
 package core.gammiechat.handler
 
-import core.gammiechat.application.ConnectRequest
+import core.gammiechat.application.ConnectionRequest
+import core.gammiechat.application.ConnectionService
 import core.gammiechat.application.PubSubService
 import core.gammiechat.logger
 import io.netty.channel.ChannelHandler.Sharable
@@ -12,7 +13,8 @@ import org.springframework.stereotype.Component
 @Component
 @Sharable
 class ConnectionHandler(
-    private val pubSubService: PubSubService
+    private val pubSubService: PubSubService,
+    private val connectionService: ConnectionService
 ) : ChannelInboundHandlerAdapter() {
 
     private val logger = logger()
@@ -39,7 +41,7 @@ class ConnectionHandler(
         if (!disposable.isDisposed) {
             disposable.dispose()
         }
-        logger.info("connection channel unsubscribe.")
+        logger.info("channel unsubscribe.")
         ctx.fireChannelInactive()
     }
 }
