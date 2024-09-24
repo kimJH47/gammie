@@ -28,7 +28,7 @@ class ChatRoomController(
     }
 
     @GetMapping("/api/chat-rooms/join/{chatRoomId}")
-    fun find(
+    fun join(
         @PathVariable("chatRoomId") chatRoomId: String,
         @AuthenticationPrincipal authUser: AuthUser
     ): ResponseEntity<JoinResponse> {
