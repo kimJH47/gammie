@@ -14,13 +14,6 @@ class ChatRoomClient(
     private val webClient: WebClient
 ) {
 
-    fun asyncFindChatRoomById(id: String): Mono<ChatRoomResponse> {
-        return webClient.get()
-            .uri("api/chat-rooms/{id}", id)
-            .retrieve()
-            .bodyToMono(ChatRoomResponse::class.java)
-    }
-
     fun exitChatRoom(roomId: String, userId: String): Mono<Unit> {
         return webClient.post()
             .uri("api/chat-rooms/exit")
@@ -28,7 +21,7 @@ class ChatRoomClient(
             .bodyValue(ExitChatRoomRequest(roomId, userId))
             .retrieve()
             .onStatus(HttpStatusCode::is4xxClientError) {
-                Mono.error(ChatException(ErrorCode.BAD_REQEUST_CHAT_API))
+                Mono.error(ChatException(ErrorCode.BAD_REQUEST_CHAT_API))
             }
             .bodyToMono<Unit>()
     }
@@ -40,7 +33,7 @@ class ChatRoomClient(
             .bodyValue(ParticipantRequest(roomId, userId))
             .retrieve()
             .onStatus(HttpStatusCode::is4xxClientError) {
-                Mono.error(ChatException(ErrorCode.BAD_REQEUST_CHAT_API))
+                Mono.error(ChatException(ErrorCode.BAD_REQUEST_CHAT_API))
             }
             .bodyToMono<Unit>()
 

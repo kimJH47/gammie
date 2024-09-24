@@ -1,6 +1,6 @@
 package core.gammiechat.application
 
-data class ConnectRequest(
+data class ParticipantRequest(
     val roomId: String,
-    val userId: String,
+    val nickname: String
 )

@@ -24,6 +24,10 @@ class CommendHandler(
                     .subscribe { pubsubService.sendMessage(it) }
             }
 
+            DISCONNECT -> {
+                connectionService.disconnect(ctx, validator.validateAndGet(payload.body, DisconnectRequest::class))
+            }
+
             else -> {
                 log.error("command not found, channel closed: {}", ctx.channel().id().asLongText())
                 throw CustomSocketException(ErrorCode.COMMAND_NOT_FOUND)

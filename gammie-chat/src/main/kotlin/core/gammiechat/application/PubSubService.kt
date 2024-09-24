@@ -15,7 +15,7 @@ class PubSubService(
         redisMessagePublisher.publish("$TOPIC_PREFIX:${chatDto.roomId}", MapperUtils.toJson(chatDto))
     }
 
-    fun sub(request: ConnectRequest, ctx: ChannelHandlerContext): Mono<Unit> {
+    fun sub(request: ConnectionRequest, ctx: ChannelHandlerContext): Mono<Unit> {
         redisMessageSubscriber.subscribe("$TOPIC_PREFIX:${request.roomId}", ctx)
         return Mono.empty()
     }

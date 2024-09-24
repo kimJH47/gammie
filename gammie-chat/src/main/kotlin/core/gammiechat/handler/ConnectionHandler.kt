@@ -21,7 +21,7 @@ class ConnectionHandler(
         if (evt is HandshakeComplete) {
             val userId = ctx.channel().attr(ConnectionAttributes.USER_ID_KEY).get()
             val roomId = ctx.channel().attr(ConnectionAttributes.ROOM_ID_KEY).get()
-            val request = ConnectRequest(roomId, userId)
+            val request = ConnectionRequest(roomId, userId)
             pubSubService.sub(request, ctx)
                 .subscribe {
                     logger.info(
@@ -30,6 +30,7 @@ class ConnectionHandler(
                         }, roomId: $roomId, userId: $userId"
                     )
                 }
+            connectionService.connect(ctx, ConnectionRequest(roomId, userId))
         }
     }
 
