@@ -39,4 +39,9 @@ class ChatRoomController(
     fun exitChatRoom(@Valid @RequestBody request: ExitChatRoomRequest) {
         chatRoomService.exit(request.roomId, request.userId)
     }
+
+    @PostMapping("/api/chat-rooms/participant")
+    fun addParticipant(@Valid @RequestBody request: ParticipantRequest) {
+        chatRoomService.addParticipant(request.roomId, request.nickname)
+    }
 }

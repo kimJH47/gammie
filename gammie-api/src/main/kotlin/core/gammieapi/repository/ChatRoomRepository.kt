@@ -17,7 +17,9 @@ interface ChatRoomRepository : MongoRepository<ChatRoom, UUID> {
 
     override fun existsById(id: UUID): Boolean
 
-    @Query("{ 'id' : _0}")
     @Update("{ '\$inc': { 'joinCount': -1 } }")
-    fun decreaseJoinCount(roomId: String)
+    fun findAndDecrementJoinCountById(id: UUID)
+
+    @Update("{ '\$inc': { 'joinCount': 1 } }")
+    fun findAndIncrementJoinCountById(id: UUID)
 }

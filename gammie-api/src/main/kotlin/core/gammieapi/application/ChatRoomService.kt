@@ -1,7 +1,9 @@
 package core.gammieapi.application
 
 import core.gammieapi.repository.ChatRoomRepository
+import core.gammieapi.repository.UserParticipant
 import core.gammieapi.repository.UserParticipantRepository
+import core.gammieapi.repository.UserRepository
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -14,7 +16,8 @@ import kotlin.time.toDuration
 class ChatRoomService(
     private val chatRoomRepository: ChatRoomRepository,
     private val chatTokenProvider: ChatTokenProvider,
-    private val userParticipantRepository: UserParticipantRepository
+    private val userParticipantRepository: UserParticipantRepository,
+    private val userRepository: UserRepository,
 ) {
 
     @Transactional(readOnly = true)
@@ -72,7 +75,29 @@ class ChatRoomService(
 
     @Transactional
     fun exit(roomId: String, userId: String) {
-        chatRoomRepository.decreaseJoinCount(roomId)
+        chatRoomRepository.findAndDecrementJoinCountById(UUID.fromString(roomId))
         userParticipantRepository.deleteByUserIdAndRoomId(roomId, UUID.fromString(userId))
+    }
+
+    @Transactional
+    fun addParticipant(roomId: String, userId: String) {
+        validateChatRoom(roomId)
+        validateUser(userId)
+        userParticipantRepository.save(UserParticipant(userId, UUID.fromString(roomId)))
+        chatRoomRepository.findAndIncrementJoinCountById(UUID.fromString(roomId))
+    }
+
+
+    private fun validateChatRoom(roomId: String) {
+        if (!chatRoomRepository.existsById(UUID.fromString(roomId))) {
+            throw CustomException(ErrorCode.CHAT_ROOM_NOT_FOUND)
+        }
+    }
+
+    private fun validateUser(nickname: String) {
+        //userId == nickname
+        if (!userRepository.existsByNickname(nickname)) {
+            throw CustomException(ErrorCode.USER_NOT_FOUND)
+        }
     }
 }
