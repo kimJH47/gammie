@@ -1,6 +1,6 @@
 package core.gammiechat.application
 
-import core.gammiechat.handler.CustomSocketException
+import core.gammiechat.exception.CustomSocketException
 import core.gammiechat.exception.ErrorCode
 import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts

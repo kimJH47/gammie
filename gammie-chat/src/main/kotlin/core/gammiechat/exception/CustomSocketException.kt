@@ -1,6 +1,4 @@
-package core.gammiechat.handler
-
-import core.gammiechat.exception.ErrorCode
+package core.gammiechat.exception
 
 data class CustomSocketException(
     val errorCode: ErrorCode,
