@@ -1,7 +1,7 @@
 package core.gammiechat.application
 
 import core.gammiechat.handler.CustomSocketException
-import core.gammiechat.handler.ErrorCode
+import core.gammiechat.exception.ErrorCode
 import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts
 import org.springframework.beans.factory.annotation.Value

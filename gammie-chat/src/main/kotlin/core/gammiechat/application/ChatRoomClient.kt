@@ -1,7 +1,7 @@
 package core.gammiechat.application
 
-import core.gammiechat.handler.ChatException
-import core.gammiechat.handler.ErrorCode
+import core.gammiechat.exception.ChatException
+import core.gammiechat.exception.ErrorCode
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component

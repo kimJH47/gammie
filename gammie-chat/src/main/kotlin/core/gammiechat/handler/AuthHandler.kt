@@ -1,6 +1,8 @@
 package core.gammiechat.handler
 
 import core.gammiechat.application.TokenValidator
+import core.gammiechat.exception.ChatException
+import core.gammiechat.exception.ErrorCode
 import io.netty.channel.ChannelHandler.Sharable
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInboundHandlerAdapter

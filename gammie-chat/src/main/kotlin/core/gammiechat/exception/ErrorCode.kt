@@ -1,4 +1,4 @@
-package core.gammiechat.handler
+package core.gammiechat.exception
 
 enum class ErrorCode(
     val message: String

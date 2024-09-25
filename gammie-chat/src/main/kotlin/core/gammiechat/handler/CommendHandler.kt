@@ -3,6 +3,7 @@ package core.gammiechat.handler
 import core.gammiechat.application.*
 import core.gammiechat.application.Command.CHAT_REQUEST
 import core.gammiechat.application.Command.DISCONNECT
+import core.gammiechat.exception.ErrorCode
 import core.gammiechat.logger
 import io.netty.channel.ChannelHandler.Sharable
 import io.netty.channel.ChannelHandlerContext

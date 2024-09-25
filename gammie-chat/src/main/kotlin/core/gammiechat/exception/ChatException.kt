@@ -1,4 +1,4 @@
-package core.gammiechat.handler
+package core.gammiechat.exception
 
 class ChatException(
     errorCode: ErrorCode,
