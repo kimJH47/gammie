@@ -1,4 +1,4 @@
-package core.gammiechat.application
+package core.gammiechat.application.dto
 
 data class ConnectionRequest(
     val roomId: String,

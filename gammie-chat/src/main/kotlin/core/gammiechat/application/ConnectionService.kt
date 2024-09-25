@@ -1,5 +1,6 @@
 package core.gammiechat.application
 
+import core.gammiechat.application.dto.ConnectionRequest
 import core.gammiechat.application.dto.DisconnectRequest
 import io.netty.channel.ChannelHandlerContext
 import org.springframework.stereotype.Service

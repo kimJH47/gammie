@@ -1,6 +1,6 @@
 package core.gammiechat.handler
 
-import core.gammiechat.application.ConnectionRequest
+import core.gammiechat.application.dto.ConnectionRequest
 import core.gammiechat.application.ConnectionService
 import core.gammiechat.application.PubSubService
 import core.gammiechat.logger

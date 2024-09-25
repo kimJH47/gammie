@@ -1,6 +1,7 @@
 package core.gammiechat.application
 
 import core.gammiechat.application.dto.ExitChatRoomRequest
+import core.gammiechat.application.dto.ParticipantRequest
 import core.gammiechat.exception.ChatException
 import core.gammiechat.exception.ErrorCode
 import org.springframework.http.HttpStatusCode

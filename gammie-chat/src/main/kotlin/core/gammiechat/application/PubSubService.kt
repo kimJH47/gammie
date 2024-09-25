@@ -1,6 +1,7 @@
 package core.gammiechat.application
 
 import core.gammiechat.application.dto.ChatDto
+import core.gammiechat.application.dto.ConnectionRequest
 import core.gammiechat.util.MapperUtils
 import io.netty.channel.ChannelHandlerContext
 import org.springframework.stereotype.Service
