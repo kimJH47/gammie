@@ -1,6 +1,5 @@
-package core.gammiechat.application
+package core.gammiechat.handler
 
-import core.gammiechat.handler.Payload
 import core.gammiechat.util.MapperUtils
 import io.netty.channel.ChannelHandler.Sharable
 import io.netty.channel.ChannelHandlerContext

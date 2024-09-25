@@ -1,6 +1,5 @@
 package core.gammiechat.handler
 
-import core.gammiechat.application.PayloadDecoder
 import core.gammiechat.application.WebCustomResponseEncoder
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.ChannelPipeline
