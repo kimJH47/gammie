@@ -31,12 +31,9 @@ class NettyConfig(
         val bootstrap = ServerBootstrap()
         bootstrap.group(bossGroup(), workerGroup())
             .channel(NioServerSocketChannel::class.java)
-            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000)
-            //.childOption(ChannelOption.TCP_NODELAY, true) // [5]
-            //.childOption(ChannelOption.SO_LINGER, 0) // [6]
-            //.childOption(ChannelOption.SO_KEEPALIVE, keepAlive) // [7]
-            //.option(ChannelOption.SO_BACKLOG, backlog) // [4]
-            //.childOption(ChannelOption.SO_REUSEADDR, true) // [8]
+            .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 100000)
+            .option(ChannelOption.SO_BACKLOG, backlog)
+            .childOption(ChannelOption.SO_KEEPALIVE, keepAlive)
             .handler(LoggingHandler())
             .childHandler(nettyChannelInitializer)
 
