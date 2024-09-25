@@ -1,11 +1,7 @@
-package core.gammiechat.config
+package core.gammiechat.handler
 
 import core.gammiechat.application.PayloadDecoder
 import core.gammiechat.application.WebCustomResponseEncoder
-import core.gammiechat.handler.AuthHandler
-import core.gammiechat.handler.CommendHandler
-import core.gammiechat.handler.ConnectionHandler
-import core.gammiechat.handler.IdleHandler
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.ChannelPipeline
 import io.netty.channel.socket.SocketChannel

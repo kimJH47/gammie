@@ -1,5 +1,6 @@
 package core.gammiechat.config
 
+import core.gammiechat.handler.NettyChannelInitializer
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelOption
 import io.netty.channel.nio.NioEventLoopGroup
