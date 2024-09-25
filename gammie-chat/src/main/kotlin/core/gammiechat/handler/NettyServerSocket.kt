@@ -1,4 +1,4 @@
-package core.gammiechat.application
+package core.gammiechat.handler
 
 import core.gammiechat.logger
 import io.netty.bootstrap.ServerBootstrap

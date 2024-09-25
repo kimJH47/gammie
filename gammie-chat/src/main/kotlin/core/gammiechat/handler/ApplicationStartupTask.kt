@@ -1,4 +1,4 @@
-package core.gammiechat.application
+package core.gammiechat.handler
 
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.ApplicationListener
