@@ -1,5 +1,6 @@
 package core.gammiechat.handler
 
+import core.gammiechat.application.ConnectionAttributes
 import core.gammiechat.application.TokenValidator
 import core.gammiechat.exception.ChatException
 import core.gammiechat.exception.ErrorCode
