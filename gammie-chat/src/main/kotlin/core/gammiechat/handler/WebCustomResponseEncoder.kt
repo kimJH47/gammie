@@ -1,4 +1,4 @@
-package core.gammiechat.application
+package core.gammiechat.handler
 
 import core.gammiechat.application.dto.CustomResponse
 import core.gammiechat.util.MapperUtils
