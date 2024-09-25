@@ -1,4 +1,4 @@
-package core.gammiechat.application
+package core.gammiechat.handler
 
 enum class Command {
     CHAT_REQUEST,
