@@ -1,6 +1,5 @@
 package core.gammiechat.application.dto
 
-import core.gammiechat.application.ResponseType
 import java.io.Serializable
 
 
