@@ -100,4 +100,13 @@ class ChatRoomService(
             throw CustomException(ErrorCode.USER_NOT_FOUND)
         }
     }
+
+    fun findByName(query: String): ChatRoomPageResponse {
+        val chatRooms = chatRoomRepository.findByName(query).takeIf { it.isNotEmpty() }
+            ?.map {
+                ChatRoomResponse(it.id.toString(), it.name, it.description, it.joinCount, it.imageUrl, it.genres)
+            } ?: return ChatRoomPageResponse("", emptyList())
+
+        return ChatRoomPageResponse(chatRooms.last().id, chatRooms)
+    }
 }

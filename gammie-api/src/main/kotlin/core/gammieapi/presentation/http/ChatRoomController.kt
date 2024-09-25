@@ -44,4 +44,9 @@ class ChatRoomController(
     fun addParticipant(@Valid @RequestBody request: ParticipantRequest) {
         chatRoomService.addParticipant(request.roomId, request.nickname)
     }
+
+    @GetMapping("/api/chat-rooms/search")
+    fun findByName(@RequestParam("query") query: String): ResponseEntity<ChatRoomPageResponse> {
+        return ResponseEntity.ok(chatRoomService.findByName(query))
+    }
 }

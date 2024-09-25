@@ -22,4 +22,7 @@ interface ChatRoomRepository : MongoRepository<ChatRoom, UUID> {
 
     @Update("{ '\$inc': { 'joinCount': 1 } }")
     fun findAndIncrementJoinCountById(id: UUID)
+
+    @Query("{ 'name': { \$regex: ?0, \$options: 'i' } }")
+    fun findByName(name: String): List<ChatRoom>
 }
