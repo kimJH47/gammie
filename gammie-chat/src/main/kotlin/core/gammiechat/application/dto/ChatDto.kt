@@ -1,4 +1,4 @@
-package core.gammiechat.application
+package core.gammiechat.application.dto
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import java.io.Serializable

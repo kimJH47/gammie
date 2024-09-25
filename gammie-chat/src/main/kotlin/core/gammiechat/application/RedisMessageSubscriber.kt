@@ -1,5 +1,7 @@
 package core.gammiechat.application
 
+import core.gammiechat.application.dto.ChatDto
+import core.gammiechat.application.dto.CustomResponse
 import core.gammiechat.handler.ConnectionAttributes
 import core.gammiechat.logger
 import core.gammiechat.util.MapperUtils

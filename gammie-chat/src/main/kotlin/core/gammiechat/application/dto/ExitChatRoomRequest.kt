@@ -1,4 +1,4 @@
-package core.gammiechat.application
+package core.gammiechat.application.dto
 
 data class ExitChatRoomRequest(
     val roomId: String,

@@ -1,5 +1,6 @@
 package core.gammiechat.application
 
+import core.gammiechat.application.dto.CustomResponse
 import core.gammiechat.util.MapperUtils
 import io.netty.channel.ChannelHandler.Sharable
 import io.netty.channel.ChannelHandlerContext

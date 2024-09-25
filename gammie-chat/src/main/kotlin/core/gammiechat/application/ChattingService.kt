@@ -1,5 +1,7 @@
 package core.gammiechat.application
 
+import core.gammiechat.application.dto.ChatDto
+import core.gammiechat.application.dto.MessageRequest
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 

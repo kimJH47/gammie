@@ -1,6 +1,8 @@
 package core.gammiechat.handler
 
 import core.gammiechat.application.*
+import core.gammiechat.application.dto.DisconnectRequest
+import core.gammiechat.application.dto.MessageRequest
 import core.gammiechat.handler.Command.CHAT_REQUEST
 import core.gammiechat.handler.Command.DISCONNECT
 import core.gammiechat.exception.CustomSocketException
