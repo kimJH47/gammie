@@ -1,0 +1,15 @@
+server:
+  host: 127.0.0.1
+  port: 8080
+  netty:
+    boss-count: 1
+    worker-count: 1
+    keep-alive: true
+    backlog: 10
+
+jwt:
+  secret-key: ${SECRET_KEY}
+
+web:
+  client:
+    baseurl : ${BASE_URL}
