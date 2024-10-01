@@ -1,0 +1,90 @@
+pipeline {
+    environment {
+        DOCKER_HUB_CREDENTIALS = credentials('DOCKER_HUB_ID')
+        docker_image_name = 'tray1147/gammie-chat:latest'
+
+    }
+
+    agent any
+
+    tools {
+        gradle 'gradle'
+    }
+
+    stages {
+        stage('Change directory') {
+            steps {
+                sh 'cd gammie-chat'
+            }
+        }
+
+        stage('GitHub pull') {
+            steps {
+                checkout scmGit(
+                        branches: [[name: 'master']],
+                        userRemoteConfigs: [[credentialsId: 'git_account', url: 'https://github.com/kimJH47/gammie']]
+                )
+            }
+        }
+
+        stage('Build Gradle') {
+            steps {
+                sh "./gammie-chat/gradlew clean build"
+            }
+        }
+
+        stage('Build Dockerfile') {
+            steps{
+                script {
+                    docker.build(
+                    env.docker_image_name,'-f docker/Dockerfile .')
+                }
+            }
+
+        }
+
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', 'DOCKER_HUB_ID') {
+                        docker.image(env.docker_image_name).push()
+                    }
+                }
+            }
+            post {
+                success {
+                    echo '성공적으로 도커 이미지가 도커허브로 푸시되었습니다.'
+
+                }
+                failure {
+                    echo '이미지 푸시 실패'
+                }
+            }
+        }
+
+//         stage('SSH') {
+//             steps {
+//                 sshagent(credentials: ['daily_summary_ssh']){
+//                     sh '''
+//                        ssh -o StrictHostKeyChecking=no ubuntu@$SERVER_IP
+//                        ssh ubuntu@$SERVER_IP "sudo docker compose up -d"
+//                       '''
+//                 }
+//             }
+//         }
+
+
+    }
+
+    post {
+        always {
+            sh "docker rmi $docker_image_name"
+        }
+        success {
+            echo '배포 파이프라인 성공'
+        }
+        failure {
+            echo '배포 파이프라인 실패'
+        }
+    }
+}
