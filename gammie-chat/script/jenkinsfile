@@ -29,7 +29,7 @@ pipeline {
 
         stage('Build Gradle') {
             steps {
-                sh "./gammie-chat/gradlew clean build"
+                sh "./gradlew clean build"
             }
         }
 
