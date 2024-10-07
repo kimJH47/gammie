@@ -13,3 +13,7 @@ jwt:
 web:
   client:
     baseurl : ${BASE_URL}
+spring:
+  data:
+    redis:
+      host: ${REDIS_HOST}
