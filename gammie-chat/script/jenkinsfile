@@ -29,15 +29,19 @@ pipeline {
 
         stage('Build Gradle') {
             steps {
-                sh "./gradlew clean build"
+                dir('gammie-chat'){
+                    sh "./gradlew clean build"
+                }
             }
         }
 
         stage('Build Dockerfile') {
             steps{
-                script {
-                    docker.build(
-                    env.docker_image_name,'-f docker/Dockerfile .')
+                dir('gammie-chat'){
+                    script {
+                       docker.build(
+                        env.docker_image_name,'-f docker/Dockerfile .')
+                    }
                 }
             }
 
