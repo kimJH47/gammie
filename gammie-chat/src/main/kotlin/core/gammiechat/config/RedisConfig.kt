@@ -1,6 +1,7 @@
 package core.gammiechat.config
 
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -16,11 +17,13 @@ import org.springframework.data.redis.serializer.StringRedisSerializer
 
 
 @Configuration
-class RedisConfig {
+@EnableConfigurationProperties(RedisProperties::class)
+class RedisConfig(
+    private val redisProperties: RedisProperties
+) {
     @Bean
     @Primary
     fun redisConnectionFactory(): RedisConnectionFactory {
-        val redisProperties = RedisProperties()
         return LettuceConnectionFactory(redisProperties.host, redisProperties.port)
     }
 
