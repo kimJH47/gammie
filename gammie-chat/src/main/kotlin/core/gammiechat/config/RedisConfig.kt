@@ -39,7 +39,6 @@ class RedisConfig(
 
     @Bean
     fun reactiveRedisConnectionFactory(): ReactiveRedisConnectionFactory {
-        val redisProperties = RedisProperties()
         return LettuceConnectionFactory(redisProperties.host, redisProperties.port)
     }
 
