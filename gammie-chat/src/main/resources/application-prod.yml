@@ -1,6 +1,6 @@
 server:
-  host: ${SEVER_HOST}
-  port: ${SEVER_PORT}
+  host: ${SERVER_HOST}
+  port: ${SERVER_PORT}
   netty:
     boss-count: 1
     worker-count: 1
