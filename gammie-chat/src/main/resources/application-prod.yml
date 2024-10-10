@@ -1,6 +1,6 @@
 server:
-  host: 127.0.0.1
-  port: 8080
+  host: ${SEVER_HOST}
+  port: ${SEVER_PORT}
   netty:
     boss-count: 1
     worker-count: 1
@@ -17,3 +17,4 @@ spring:
   data:
     redis:
       host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
