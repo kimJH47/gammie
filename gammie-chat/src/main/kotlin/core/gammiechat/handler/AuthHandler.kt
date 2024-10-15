@@ -22,8 +22,10 @@ class AuthHandler(
         if (msg is HttpRequest) {
             val uriComponents = UriComponentsBuilder.fromUriString(msg.uri())
                 .build()
+
             val token = uriComponents.queryParams.getFirst("token")
                 ?: throw ChatException(ErrorCode.INVALID_TOKEN)
+
             val payload = tokenValidator.validateAndGetPayload(token)
             ctx.channel().attr(ConnectionAttributes.CHAT_PAYLOAD_KEY).set(payload)
         }
