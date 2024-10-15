@@ -14,11 +14,11 @@ class TokenValidator(
 ) {
     private val jwtParser: JwtParser = Jwts.parser()
 
-    fun validateAndGetPayload(token: String): Map<String, Any> {
+    fun validateAndGetPayload(token: String): ChatPayload {
         jwtParser.setSigningKey(secretKey)
         kotlin.runCatching {
             val parseClaimsJws = jwtParser.parseClaimsJws(token)
-            return parseClaimsJws.body.toMap()
+            return ChatPayload.createWithPayload(parseClaimsJws.body)
         }.getOrElse { throw CustomSocketException(ErrorCode.INVALID_TOKEN) }
     }
 }

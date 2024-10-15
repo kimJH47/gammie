@@ -20,17 +20,12 @@ class AuthHandler(
 
     override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {
         if (msg is HttpRequest) {
-
-            val uri = msg.uri()
-            val component = UriComponentsBuilder.fromUriString(uri)
+            val uriComponents = UriComponentsBuilder.fromUriString(msg.uri())
                 .build()
-
-            val token = component.queryParams.getFirst("token")
+            val token = uriComponents.queryParams.getFirst("token")
                 ?: throw ChatException(ErrorCode.INVALID_TOKEN)
-
             val payload = tokenValidator.validateAndGetPayload(token)
-            ctx.channel().attr(ConnectionAttributes.ROOM_ID_KEY).set(payload["roomId"].toString())
-            ctx.channel().attr(ConnectionAttributes.USER_ID_KEY).set(payload["userId"].toString())
+            ctx.channel().attr(ConnectionAttributes.CHAT_PAYLOAD_KEY).set(payload)
         }
 
         ctx.fireChannelRead(msg)
