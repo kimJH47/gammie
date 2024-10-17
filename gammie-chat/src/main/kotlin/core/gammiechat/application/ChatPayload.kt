@@ -10,7 +10,7 @@ data class ChatPayload(
     companion object {
         fun createWithPayload(payload: Map<String, Any>): ChatPayload {
             if (payload.containsKey("userId") && payload.containsKey("roomId")) {
-                return ChatPayload(payload["userId"].toString(), payload["userId"].toString())
+                return ChatPayload(payload["userId"].toString(), payload["roomId"].toString())
             }
             throw ChatException(ErrorCode.INVALID_TOKEN)
         }
