@@ -1,9 +1,9 @@
 package core.gammiechat.handler
 
 import core.gammiechat.application.ConnectionAttributes
-import core.gammiechat.application.dto.ConnectionRequest
 import core.gammiechat.application.ConnectionService
-import core.gammiechat.application.PubSubService
+import core.gammiechat.application.dto.ConnectionRequest
+import core.gammiechat.application.dto.DisconnectRequest
 import core.gammiechat.logger
 import io.netty.channel.ChannelHandler.Sharable
 import io.netty.channel.ChannelHandlerContext
@@ -22,18 +22,10 @@ class ConnectionHandler(
 
     override fun userEventTriggered(ctx: ChannelHandlerContext, evt: Any) {
         if (evt is HandshakeComplete) {
-            val userId = ctx.channel().attr(ConnectionAttributes.USER_ID_KEY).get()
-            val roomId = ctx.channel().attr(ConnectionAttributes.ROOM_ID_KEY).get()
-            val request = ConnectionRequest(roomId, userId)
-            pubSubService.sub(request, ctx)
-                .subscribe {
-                    logger.info(
-                        "connection channel subscribe. channelId: ${
-                            ctx.channel().id()
-                        }, roomId: $roomId, userId: $userId"
-                    )
-                }
-            connectionService.connect(ctx, ConnectionRequest(roomId, userId))
+            val payload = ctx.channel().attr(ConnectionAttributes.CHAT_PAYLOAD_KEY).get()
+            val request = ConnectionRequest(payload.roomId, payload.userId)
+            connectionService.connect(ctx, request)
+                .subscribe()
         }
     }
 
