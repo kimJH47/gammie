@@ -3,7 +3,6 @@ package core.gammiechat.handler
 import core.gammiechat.application.ConnectionAttributes
 import core.gammiechat.application.ConnectionService
 import core.gammiechat.application.dto.ConnectionRequest
-import core.gammiechat.application.dto.DisconnectRequest
 import core.gammiechat.logger
 import io.netty.channel.ChannelHandler.Sharable
 import io.netty.channel.ChannelHandlerContext
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component
 @Component
 @Sharable
 class ConnectionHandler(
-    private val pubSubService: PubSubService,
     private val connectionService: ConnectionService
 ) : ChannelInboundHandlerAdapter() {
 
@@ -30,11 +28,12 @@ class ConnectionHandler(
     }
 
     override fun channelInactive(ctx: ChannelHandlerContext) {
-        val disposable = ctx.channel().attr(ConnectionAttributes.SUBSCRIPTION_KEY).get()
-        if (!disposable.isDisposed) {
-            disposable.dispose()
-        }
-        logger.info("channel unsubscribe.")
+        val payload = ctx.channel().attr(ConnectionAttributes.CHAT_PAYLOAD_KEY).get()
+        logger.info(
+            "channel inactive, channelId: ${
+                ctx.channel().id()
+            } userId: ${payload.userId} roomId: ${payload.roomId}"
+        )
         ctx.fireChannelInactive()
     }
 }
