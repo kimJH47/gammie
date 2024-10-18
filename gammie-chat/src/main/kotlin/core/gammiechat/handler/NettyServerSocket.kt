@@ -15,7 +15,7 @@ class NettyServerSocket(
 
     fun start() {
         try {
-            log.info("Netty server started")
+            log.info("Netty server starting! ip:${tcp.address.hostName} port:${tcp.port}")
             val channelFuture = bootstrap.bind(tcp)
                 .sync()
             channelFuture.channel().closeFuture().sync()
