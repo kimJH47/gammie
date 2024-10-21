@@ -15,7 +15,7 @@ import java.net.InetSocketAddress
 class NettyConfig(
     @Value("\${server.host}")
     private val host: String,
-    @Value("\${server.port}")
+    @Value("\${netty.chat.port}")
     private val port: Int,
     @Value("\${server.netty.boss-count}")
     private val bossCount: Int,
