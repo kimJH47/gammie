@@ -73,6 +73,7 @@ class ChatRoomService(
         return JoinResponse(chatToken, roomId, userId)
     }
 
+    //트랜잭션 분리해야함.
     @Transactional
     fun exit(roomId: String, userId: String) {
         chatRoomRepository.findAndDecrementJoinCountById(UUID.fromString(roomId))
