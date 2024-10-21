@@ -18,3 +18,7 @@ spring:
     redis:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
+
+netty:
+  chat:
+    port: ${NETTY_CHAT_PORT}
